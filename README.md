@@ -1,3 +1,5 @@
+# Arma III
+
 ## How to use this image?
 
 ```bash
@@ -10,5 +12,5 @@ docker run -it --rm \
 	-p 2303:2303 \
 	-p 2304:2304 \
 	-p 2305:2305 \
-	arma3
+	houki/arma3
 ```
