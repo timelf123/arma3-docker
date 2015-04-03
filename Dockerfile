@@ -13,7 +13,7 @@ RUN /root/steamcmd.sh +login anonymous +quit
 RUN echo 233780 > steam_appid.txt
 
 VOLUME /arma3
-VOLUME /server
+VOLUME /server/profiles
 
 ENV STEAM_USERNAME=username
 ENV STEAM_PASSWORD=password
