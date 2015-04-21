@@ -14,14 +14,11 @@ RUN echo 233780 > steam_appid.txt
 
 VOLUME /arma3
 VOLUME /profiles
+VOLUME /server
 
 ENV STEAM_USERNAME=username
 ENV STEAM_PASSWORD=password
-
 ENV VALIDATE=1
-
-COPY main.cfg /server/
-COPY basic.cfg /server/
 
 COPY docker-entrypoint.sh /
 
@@ -31,4 +28,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 WORKDIR /arma3
 
-CMD ["./arma3server", "-ip=0.0.0.0", "-port=2302", "-profiles=/profiles", "-config=/server/main.cfg", "-cfg=/server/basic.cfg", "-name=default"]
+CMD ["./arma3server", "-port=2302", "-profiles=/profiles", "-config=/server/main.cfg", "-cfg=/server/basic.cfg", "-name=default", "-world=empty"]
