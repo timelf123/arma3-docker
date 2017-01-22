@@ -15,7 +15,6 @@ RUN echo 233780 > steam_appid.txt
 VOLUME /arma3
 VOLUME /profiles
 VOLUME /server
-VOLUME /mods
 
 ENV STEAM_USERNAME=username
 ENV STEAM_PASSWORD=password
