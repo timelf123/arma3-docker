@@ -4,51 +4,33 @@
 
 ```bash
 docker run -it \
-	--env-file credentials \
-	--env-file modset \
-	-v $PWD/arma3:/arma3 \
+	-v $PWD/keys:/arma3/keys \
+	-v $PWD/mods:/arma3/mods \
+	-v $PWD/mpmissions:/arma3/mpmissions \
+	-v $PWD/server:/server \
+	-v $PWD/params:/arma3/params \
 	-v $PWD/profiles:/profiles \
-	-p 2302:2302/udp \
-	-p 2303:2303/udp \
-	-p 2304:2304/udp \
-	-p 2305:2305/udp \
-	houki/arma3
+	-p 2302-2305:2302-2305/udp \
+	idahlke/arma3:latest
 ```
 
 ## Sample `credentials` file
+This file supplies your steam login credentials to docker at image build time. It is removed from the image before completion of the build.
 
 ```
-STEAM_USERNAME=your_steam_username
-STEAM_PASSWORD=your_steam_password
+echo "STEAM_USERNAME=your_steam_username; \
+	STEAM_PASSWORD=your_steam_password;"
 ```
 
-## Sample `modset` file
+## Sample `params` file
+This file contains arma3 server launch params. It is provided at runtime.
 
 ```
-MODS="@mod1;@mod2"
+-port=2302
+-config=/server/main.cfg
+-cfg=/server/basic.cfg
+-name=default
+-world=empty
+-mod=mods/@MOD1;mods/@MOD2
+-servermods=
 ```
-
-## Custom mission
-
-```bash
-docker run -it \
-	--env-file credentials \
-	--env-file modset \
-	-v $PWD/arma3:/arma3 \
-	-v $PWD/profiles:/profiles \
-	-v $PWD/my_mission/main.cfg:/server/main.cfg \
-	-v $PWD/my_mission/basic.cfg:/server/basic.cfg \
-	-p 2302:2302/udp \
-	-p 2303:2303/udp \
-	-p 2304:2304/udp \
-	-p 2305:2305/udp \
-	houki/arma3
-```
-
-## Stop externally
-
-```bash
-docker exec [container name/id] kill -s SIGINT $(docker exec arma3server ps aux | grep '[a]rma3server' | awk '{print $2}')
-```
-
-This sends SIGINT to all processes running within container that have 'arma3server' in their launch command. Typically this only includes 'sh' and (the true target) 'arma3server'. 'sh' ignores. 'arma3server' shuts down gracefully. It's not ideal but will do for now. This is an effective way to reboot the server if you're launching the container with ```--restart=unless-stopped``` or something similar.

@@ -1,6 +1,6 @@
 FROM ubuntu
 
-MAINTAINER "Diego Marangoni" <diegomarangoni@me.com>
+MAINTAINER "Ian Dahlke" <ian.dahlke@gmail.com>
 
 RUN apt-get update && apt-get install -y lib32gcc1 lib32stdc++6 wget
 
@@ -12,20 +12,20 @@ RUN cd /root \
 RUN /root/steamcmd.sh +login anonymous +quit
 RUN echo 233780 > steam_appid.txt
 
-VOLUME /arma3
 VOLUME /profiles
 VOLUME /server
 
-ENV STEAM_USERNAME=username
-ENV STEAM_PASSWORD=password
 ENV VALIDATE=1
 
-COPY docker-entrypoint.sh /
+EXPOSE 2302/udp 2303/udp 2304/udp 2305/udp
 
-EXPOSE 2302 2303 2304 2305
+COPY credentials.sh /
+COPY installserver.sh /
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+RUN /installserver.sh \
+	&& rm -f /credentials.sh \
+	&& rm -f /installserver.sh
 
 WORKDIR /arma3
 
-CMD ["sh", "-c", "./arma3server -port=2302 -profiles=/profiles -config=/server/main.cfg -cfg=/server/basic.cfg -name=default -world=empty -mod=${MODS}"]
+CMD ["./arma3server", "-par=params", "-profiles=/profiles"]
