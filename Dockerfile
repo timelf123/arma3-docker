@@ -28,4 +28,5 @@ RUN /installserver.sh \
 
 WORKDIR /arma3
 
+STOPSIGNAL SIGINT
 CMD ["./arma3server", "-par=params", "-profiles=/profiles"]
