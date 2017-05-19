@@ -10,6 +10,10 @@ eval "$(/credentials.sh)"
 
 /root/steamcmd.sh +login $STEAM_USERNAME $STEAM_PASSWORD +force_install_dir /arma3 +app_update 233780 $OPTS +quit
 
+#workaround for server bug
+rm /arma3/steamclient.so
+ln -s /root/linux64/steamclient.so /arma3/steamclient.so
+
 unset OPTS
 unset STEAM_USERNAME
 unset STEAM_PASSWORD
