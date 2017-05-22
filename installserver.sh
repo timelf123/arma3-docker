@@ -12,7 +12,7 @@ eval "$(/credentials.sh)"
 
 #workaround for server bug
 rm /arma3/steamclient.so
-ln -s /root/linux64/steamclient.so /arma3/steamclient.so
+ln -s /root/linux32/steamclient.so /arma3/steamclient.so
 
 unset OPTS
 unset STEAM_USERNAME

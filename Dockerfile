@@ -3,7 +3,7 @@ FROM ubuntu
 MAINTAINER "Tim Elfelt" <timelf123@gmail.com>
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get update && apt-get install -y lib32gcc1 lib32stdc++6 wget
+RUN apt-get update && apt-get install -y lib32gcc1 lib32stdc++6 wget net-tools
 
 RUN cd /root \
 	&& wget http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
