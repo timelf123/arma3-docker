@@ -3,7 +3,8 @@ FROM ubuntu
 MAINTAINER "Tim Elfelt" <timelf123@gmail.com>
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get update && apt-get install -y lib32gcc1 lib32stdc++6 wget net-tools
+#RUN apt-get update && apt-get install -y lib32gcc1 lib32stdc++6 wget net-tools
+RUN dpkg --add-architecture i386; apt-get update;apt-get install -y lib32gcc1 libstdc++6 libstdc++6:i386 libtbb2:i386 libtbb2 wget net-tools binutils
 
 RUN cd /root \
 	&& wget http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
@@ -18,6 +19,7 @@ VOLUME /server
 ENV DEBIAN_FRONTEND=noninteractive
 ENV VALIDATE=1
 
+EXPOSE 2301/udp
 EXPOSE 2302/udp
 EXPOSE 2303/udp
 EXPOSE 2304/udp
